@@ -1,2 +1,4 @@
-package spaceinvaders
+public class Board{
+	
 
+}
