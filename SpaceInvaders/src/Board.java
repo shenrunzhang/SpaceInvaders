@@ -85,7 +85,6 @@ public class Board extends JPanel implements ActionListener {
         updateMissiles();
         updateAlien();
         repaint();
-        System.out.println(alien.getMissiles().size());
         
     }
 
