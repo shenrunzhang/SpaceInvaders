@@ -9,7 +9,8 @@ public class SpaceInvaders extends JFrame {
 	public void initUI() {
 		add(new Board());
         
-        setSize(400, 300);
+		//Board Size
+        setSize(1000, 650);
         setResizable(false);
         
         setTitle("Space Invaders");

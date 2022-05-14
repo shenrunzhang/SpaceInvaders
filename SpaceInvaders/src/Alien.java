@@ -33,7 +33,7 @@ public class Alien extends Sprite{
     
     
     public void fire() {
-    	missiles.add(new Alien_Missile(x + width/2, y - height));
+    	missiles.add(new Alien_Missile(x + width/2, y + height));
     }
     
     

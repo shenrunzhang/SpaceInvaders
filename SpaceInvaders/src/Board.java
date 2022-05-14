@@ -66,11 +66,12 @@ public class Board extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
-        updateMissiles();
-        updateAlien();
-
-        repaint();
+    	
+    	
+    	int rand = (int)(Math.random() * 300000);
+    	
+    	if (rand < 1000)
+    		alien.fire();
         
         if(alien.getX() == ICRAFT_X + 100)
             moveR = false;
@@ -80,6 +81,12 @@ public class Board extends JPanel implements ActionListener {
             alien.moveRight();
         else
             alien.moveLeft();
+        
+        updateMissiles();
+        updateAlien();
+        repaint();
+        System.out.println(alien.getMissiles().size());
+        
     }
 
     private void updateMissiles() {

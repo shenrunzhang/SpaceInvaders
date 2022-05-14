@@ -1,6 +1,6 @@
 public class Alien_Missile extends Sprite{
 	
-	private final int BOARD_WIDTH = 390;
+	private final int BOARD_WIDTH = 600;
     private final int MISSILE_SPEED = 2;
     
     public Alien_Missile(int x, int y){
@@ -13,7 +13,7 @@ public class Alien_Missile extends Sprite{
     }
     public void move(){
     
-        y -= MISSILE_SPEED;
+        y += MISSILE_SPEED;
         
         if (y > BOARD_WIDTH){
             visible = false;
