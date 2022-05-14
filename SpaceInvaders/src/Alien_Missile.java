@@ -1,4 +1,5 @@
 public class Alien_Missile extends Sprite{
+	
 	private final int BOARD_WIDTH = 390;
     private final int MISSILE_SPEED = 2;
     
@@ -7,7 +8,7 @@ public class Alien_Missile extends Sprite{
         initMissile();
     }
     private void initMissile(){
-        loadImage("resources/alien_missile.png");
+        loadImage("SpaceInvaders/src/resources/alien_missile.png");
         getImageDimensions();
     }
     public void move(){
