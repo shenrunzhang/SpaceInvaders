@@ -1,6 +1,6 @@
 
 public class Missile extends Sprite {
-	private final int speed = 2;
+	private final int dy = 2;
 	private final int boardWidth = 390;
 
 	public Missile(int x, int y) {
@@ -14,7 +14,7 @@ public class Missile extends Sprite {
 	}
 
 	public void move() {
-		y += speed;
+		y += dy;
 		if (y > boardWidth) {
 			visible = false;
 		}
