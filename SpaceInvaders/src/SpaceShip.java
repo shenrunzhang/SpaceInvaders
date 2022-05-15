@@ -2,7 +2,7 @@ import java.awt.Image;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 
-public class SpaceShip {
+public class SpaceShip extends Sprite{
 
     private int dx;
     private int dy;
@@ -13,7 +13,7 @@ public class SpaceShip {
     private Image image;
 
     public SpaceShip() {
-
+    	super(40, 60);
         loadImage();
     }
 
@@ -97,5 +97,9 @@ public class SpaceShip {
         if (key == KeyEvent.VK_DOWN) {
             dy = 0;
         }
+    }
+    
+    public void shoot() {
+    	
     }
 }
