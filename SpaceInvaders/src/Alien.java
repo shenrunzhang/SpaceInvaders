@@ -2,7 +2,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Alien extends Sprite{
+public class Alien extends Sprite {
 	private int dx;
     private int dy = 0;
     private ArrayList<Alien_Missile> missiles;

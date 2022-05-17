@@ -19,15 +19,19 @@ public class Board extends JPanel implements ActionListener {
     private final int DELAY = 10;
     private Timer timer;
     private Alien alien;
+    private SpaceShip ship;
     private boolean moveR = true;
+    private Image background;
 
 
     public Board() {
 
         initBoard();
+        ship = new SpaceShip(background.getWidth(this) / 2, 10);
     }
 
     private void initBoard() {
+        loadImage();
 
         addKeyListener(new TAdapter());
         setBackground(Color.BLACK);
@@ -38,11 +42,16 @@ public class Board extends JPanel implements ActionListener {
         timer = new Timer(DELAY, this);
         timer.start();
     }
+    private void loadImage() {
+
+		ImageIcon ii = new ImageIcon("src/resources/bardejov.png");
+		background = ii.getImage();
+	}
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
+        g.drawImage(background, 0, 0, null);
         doDrawing(g);
 
         Toolkit.getDefaultToolkit().sync();

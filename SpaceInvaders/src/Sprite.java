@@ -27,6 +27,14 @@ public class Sprite{
         width = image.getWidth(null);
         height = image.getHeight(null);
     }  
+    public boolean collide(Sprite s) {
+    	if(x >= s.getX() && x + width <= s.getX()) {
+    		if(y >= s.getY() && y + height <= s.getY()) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
     public Image getImage() {
         return image;
     }
