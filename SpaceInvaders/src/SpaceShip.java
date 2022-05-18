@@ -11,9 +11,8 @@ public class SpaceShip extends Sprite {
 	public SpaceShip(int x, int y) {
 		super(x, y);
 		missiles = new ArrayList<Missile>();
-		loadImage("SpaceInvaders/src/resources/spaceship.png");
+		loadImage("src/resources/spaceship.png");
 	}
-	
 
 	public void shoot() {
 		Missile missile = new Missile(x + 25, y + height);
@@ -27,6 +26,7 @@ public class SpaceShip extends Sprite {
 	public void move() {
 		x += dx;
 		y += dy;
+		// System.out.println(getX() + " " + getY());
 	}
 
 	public void keyPressed(KeyEvent e) {

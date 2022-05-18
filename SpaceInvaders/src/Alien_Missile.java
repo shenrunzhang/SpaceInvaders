@@ -8,7 +8,7 @@ public class Alien_Missile extends Sprite{
         initMissile();
     }
     private void initMissile(){
-        loadImage("SpaceInvaders/src/resources/alien_missile.png");
+        loadImage("src/resources/alien_missile.png");
         getImageDimensions();
     }
     public void move(){

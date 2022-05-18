@@ -5,158 +5,175 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import java.awt.Image;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
 
 public class Board extends JPanel implements ActionListener {
 
-    private final int ICRAFT_X = 40;
-    private final int ICRAFT_Y = 60;
-    private final int DELAY = 10;
-    private Timer timer;
-    private Alien alien;
-    private SpaceShip ship;
-    private boolean moveR = true;
-    private Image background;
+	private final int ICRAFT_X = 40;
+	private final int ICRAFT_Y = 60;
+	private final int DELAY = 10;
+	private Timer timer;
+	private Alien[][] aliens;
+	private Alien alien;
+	private SpaceShip ship;
+	private boolean moveR = true;
+	private Image background;
 
+	public Board() {
 
-    public Board() {
+		initBoard();
+		ship = new SpaceShip(450, 500);
+	}
 
-        initBoard();
-        ship = new SpaceShip(450, 500);
-    }
+	private void initBoard() {
+		int rowAliens = 4;
+		int columnAliens = 4;
+		aliens = new Alien[columnAliens][rowAliens];
+		loadImage();
 
-    private void initBoard() {
-        loadImage();
+		addKeyListener(new TAdapter());
+		setBackground(Color.BLACK);
+		setFocusable(true);
+		for (int i = 0; i < columnAliens; i++) {
+			for (int j = 0; j < rowAliens; j++) {
+				aliens[i][j] = new Alien(230 + i * (690 / rowAliens), j * (250 / columnAliens));
+			}
+		}
+		timer = new Timer(DELAY, this);
+		timer.start();
+	}
 
-        addKeyListener(new TAdapter());
-        setBackground(Color.BLACK);
-        setFocusable(true);
+	private void loadImage() {
 
-        alien = new Alien(ICRAFT_X, ICRAFT_Y);
-
-        timer = new Timer(DELAY, this);
-        timer.start();
-    }
-    private void loadImage() {
-
-		ImageIcon ii = new ImageIcon("SpaceInvaders/src/resources/Background.jpg");
+		ImageIcon ii = new ImageIcon("src/resources/background.jpg");
 		background = ii.getImage();
 	}
 
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(background, 0, 0, null);
-        doDrawing(g);
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawImage(background, 0, 0, null);
+		doDrawing(g);
 
-        Toolkit.getDefaultToolkit().sync();
-    }
+		Toolkit.getDefaultToolkit().sync();
+	}
 
-    private void doDrawing(Graphics g) {
+	private void doDrawing(Graphics g) {
 
-        Graphics2D g2d = (Graphics2D) g;
-        
-        g2d.drawImage(alien.getImage(), alien.getX(),
-                alien.getY(), this);
+		Graphics2D g2d = (Graphics2D) g;
+		for (int i = 0; i < aliens.length; i++) {
+			for (int j = 0; j < aliens[i].length; j++) {
+				g2d.drawImage(aliens[i][j].getImage(), aliens[i][j].getX(), aliens[i][j].getY(), this);
+				ArrayList<Alien_Missile> a_missiles = aliens[i][j].getMissiles();
+				for (Alien_Missile missile : a_missiles) {
+					g2d.drawImage(missile.getImage(), missile.getX(), missile.getY(), this);
+				}
+			}
+		}
 
-        ArrayList<Alien_Missile> a_missiles = alien.getMissiles();
-        ArrayList<Missile> missiles = ship.getMissiles();
+		ArrayList<Missile> missiles = ship.getMissiles();
+		g2d.drawImage(ship.getImage(), ship.getX(), ship.getY(), this);
+		for (Missile missile : missiles) {
+			g2d.drawImage(missile.getImage(), missile.getX(), missile.getY(), this);
+		}
 
-        for (Alien_Missile missile : a_missiles) {
-            
-            g2d.drawImage(missile.getImage(), missile.getX(),
-                    missile.getY(), this);
-        }
-        for (Missile missile : missiles) {
-            
-            g2d.drawImage(missile.getImage(), missile.getX(),
-                    missile.getY(), this);
-        }
+	}
 
-        
-        g2d.drawImage(ship.getImage(), ship.getX(),ship.getY(),this);
-        
-    }
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		for (int i = 0; i < aliens.length; i++) {
+			for (int j = 0; j < aliens[i].length; j++) {
+				randomAlienFire(aliens[i][j]);
+			}
+		}
+		updateMissiles();
+		updateAlien();
+		updateSpaceship();
+		repaint();
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-    	
-    	
-    	int rand = (int)(Math.random() * 300000);
-    	
-    	if (rand < 1000)
-    		alien.fire();
-        
-        if(alien.getX() == ICRAFT_X + 100)
-            moveR = false;
-        if(alien.getX() == ICRAFT_X -1)
-            moveR = true;
-        if(moveR)
-            alien.moveRight();
-        else
-            alien.moveLeft();
-        
-        updateMissiles();
-        updateAlien();
-        updateSpaceship();
-        repaint();
-        
-    }
+	}
 
-    private void updateMissiles() {
+	private void updateMissiles() {
 
-        ArrayList<Alien_Missile> a_missiles = alien.getMissiles();
-        
-        
-        for (int i = 0; i < a_missiles.size(); i++) {
+		for (int i = 0; i < aliens.length; i++) {
+			for (int j = 0; j < aliens[i].length; j++) {
+				ArrayList<Alien_Missile> a_missiles = aliens[i][j].getMissiles();
 
-        	Alien_Missile missile = a_missiles.get(i);
+				for (int k = 0; k < a_missiles.size(); k++) {
 
-            if (missile.isVisible()) {
+					Alien_Missile missile = a_missiles.get(k);
 
-                missile.move();
-            } else {
+					if (missile.isVisible()) {
 
-            	a_missiles.remove(i);
-            }
-        }
-        
-        ArrayList<Missile> missiles = ship.getMissiles();
-        System.out.println(missiles.size());
-        
-        for (int i = 0; i < missiles.size(); i++) {
+						missile.move();
+					} else {
 
-        	Missile missile = missiles.get(i);
+						a_missiles.remove(k);
+					}
+				}
+			}
+		}
 
-            if (missile.isVisible()) {
+		ArrayList<Missile> missiles = ship.getMissiles();
+		// System.out.println(missiles.size());
 
-                missile.move();
-            } else {
+		for (int i = 0; i < missiles.size(); i++) {
 
-            	missiles.remove(i);
-            }
-        }
+			Missile missile = missiles.get(i);
 
-    }
+			if (missile.isVisible()) {
 
-    private void updateAlien() {
-        alien.move();
-    }
-    private void updateSpaceship() {
-    	ship.move();
-    }
+				missile.move();
+			} else {
 
-    private class TAdapter extends KeyAdapter {
+				missiles.remove(i);
+			}
+		}
 
-    	@Override
-        public void keyReleased(KeyEvent e) {
-            ship.keyReleased(e);
-        }
+	}
 
-        @Override
-        public void keyPressed(KeyEvent e) {
-            ship.keyPressed(e);
-        }
-       
-    }
-   
+	private void randomAlienFire(Alien alien) {
+		int rand = (int) (Math.random() * 300000);
+
+		if (rand < 1000)
+			alien.fire();
+
+		if (alien.getX() == ICRAFT_X + 100)
+			moveR = false;
+		if (alien.getX() == ICRAFT_X - 1)
+			moveR = true;
+		if (moveR)
+			alien.moveRight();
+		else
+			alien.moveLeft();
+	}
+
+	private void updateAlien() {
+		for (int i = 0; i < aliens.length; i++) {
+			for (int j = 0; j < aliens[i].length; j++) {
+				aliens[i][j].move();
+			}
+		}
+	}
+
+	private void updateSpaceship() {
+		ship.move();
+	}
+
+	private class TAdapter extends KeyAdapter {
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			ship.keyReleased(e);
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			ship.keyPressed(e);
+		}
+
+	}
+
 }

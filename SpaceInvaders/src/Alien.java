@@ -12,7 +12,7 @@ public class Alien extends Sprite {
     	
     	missiles = new ArrayList<>();
     	
-    	loadImage("SpaceInvaders/src/resources/alien1.png");
+    	loadImage("src/resources/alien1.png");
     	getImageDimensions();
     }
     

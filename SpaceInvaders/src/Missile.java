@@ -9,7 +9,7 @@ public class Missile extends Sprite {
 	}
 
 	private void display() {
-		loadImage("SpaceInvaders/src/resources/missile.png");
+		loadImage("src/resources/missile.png");
 		getImageDimensions();
 	}
 
