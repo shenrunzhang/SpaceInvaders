@@ -16,7 +16,7 @@ public class SpaceShip extends Sprite {
 	
 
 	public void shoot() {
-		Missile missile = new Missile(x + width / 2, y + height);
+		Missile missile = new Missile(x + 25, y + height);
 		missiles.add(missile);
 	}
 

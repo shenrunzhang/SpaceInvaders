@@ -5,7 +5,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import java.awt.Image;
-import javax.swing.ImageIcon;
 
 public class Board extends JPanel implements ActionListener {
 
@@ -39,7 +38,7 @@ public class Board extends JPanel implements ActionListener {
     }
     private void loadImage() {
 
-		ImageIcon ii = new ImageIcon("SpaceInvaders/src/resources/bardejov.png");
+		ImageIcon ii = new ImageIcon("SpaceInvaders/src/resources/Background.jpg");
 		background = ii.getImage();
 	}
 
@@ -60,12 +59,19 @@ public class Board extends JPanel implements ActionListener {
                 alien.getY(), this);
 
         ArrayList<Alien_Missile> a_missiles = alien.getMissiles();
+        ArrayList<Missile> missiles = ship.getMissiles();
 
         for (Alien_Missile missile : a_missiles) {
             
             g2d.drawImage(missile.getImage(), missile.getX(),
                     missile.getY(), this);
         }
+        for (Missile missile : missiles) {
+            
+            g2d.drawImage(missile.getImage(), missile.getX(),
+                    missile.getY(), this);
+        }
+
         
         g2d.drawImage(ship.getImage(), ship.getX(),ship.getY(),this);
         
@@ -99,7 +105,8 @@ public class Board extends JPanel implements ActionListener {
     private void updateMissiles() {
 
         ArrayList<Alien_Missile> a_missiles = alien.getMissiles();
-
+        
+        
         for (int i = 0; i < a_missiles.size(); i++) {
 
         	Alien_Missile missile = a_missiles.get(i);
@@ -112,6 +119,23 @@ public class Board extends JPanel implements ActionListener {
             	a_missiles.remove(i);
             }
         }
+        
+        ArrayList<Missile> missiles = ship.getMissiles();
+        System.out.println(missiles.size());
+        
+        for (int i = 0; i < missiles.size(); i++) {
+
+        	Missile missile = missiles.get(i);
+
+            if (missile.isVisible()) {
+
+                missile.move();
+            } else {
+
+            	missiles.remove(i);
+            }
+        }
+
     }
 
     private void updateAlien() {
