@@ -11,8 +11,9 @@ public class SpaceShip extends Sprite {
 	public SpaceShip(int x, int y) {
 		super(x, y);
 		missiles = new ArrayList<Missile>();
-		loadImage("src/resources/spaceship.png");
+		loadImage("SpaceInvaders/src/resources/spaceship.png");
 	}
+	
 
 	public void shoot() {
 		Missile missile = new Missile(x + width / 2, y + height);

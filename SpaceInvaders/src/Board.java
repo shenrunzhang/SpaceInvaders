@@ -29,7 +29,7 @@ public class Board extends JPanel implements ActionListener {
     public Board() {
 
         initBoard();
-        ship = new SpaceShip(background.getWidth(this) / 2, 10);
+        ship = new SpaceShip(450, 500);
     }
 
     private void initBoard() {
@@ -46,7 +46,7 @@ public class Board extends JPanel implements ActionListener {
     }
     private void loadImage() {
 
-		ImageIcon ii = new ImageIcon("src/resources/bardejov.png");
+		ImageIcon ii = new ImageIcon("SpaceInvaders/src/resources/bardejov.png");
 		background = ii.getImage();
 	}
 
@@ -73,6 +73,9 @@ public class Board extends JPanel implements ActionListener {
             g2d.drawImage(missile.getImage(), missile.getX(),
                     missile.getY(), this);
         }
+        
+        g2d.drawImage(ship.getImage(), ship.getX(),ship.getY(),this);
+        
     }
 
     @Override
@@ -95,6 +98,7 @@ public class Board extends JPanel implements ActionListener {
         
         updateMissiles();
         updateAlien();
+        updateSpaceship();
         repaint();
         
     }
@@ -120,17 +124,22 @@ public class Board extends JPanel implements ActionListener {
     private void updateAlien() {
         alien.move();
     }
+    private void updateSpaceship() {
+    	ship.move();
+    }
 
     private class TAdapter extends KeyAdapter {
 
-       /* @Override
+    	@Override
         public void keyReleased(KeyEvent e) {
-            alien.keyReleased(e);
+            ship.keyReleased(e);
         }
 
         @Override
         public void keyPressed(KeyEvent e) {
-            alien.keyPressed(e);
-        */
+            ship.keyPressed(e);
+        }
+       
     }
+   
 }
