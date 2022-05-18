@@ -1,14 +1,7 @@
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.util.List;
-import java.util.ArrayList;
-
+import java.util.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import java.awt.Image;
@@ -105,7 +98,7 @@ public class Board extends JPanel implements ActionListener {
 
     private void updateMissiles() {
 
-        List<Alien_Missile> a_missiles = alien.getMissiles();
+        ArrayList<Alien_Missile> a_missiles = alien.getMissiles();
 
         for (int i = 0; i < a_missiles.size(); i++) {
 
