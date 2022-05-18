@@ -140,14 +140,11 @@ public class Board extends JPanel implements ActionListener {
 		if (rand < 1000)
 			alien.fire();
 
-		if (alien.getX() == ICRAFT_X + 100)
-			moveR = false;
-		if (alien.getX() == ICRAFT_X - 1)
-			moveR = true;
-		if (moveR)
-			alien.moveRight();
-		else
-			alien.moveLeft();
+		/*
+		 * if (alien.getX() == ICRAFT_X + 100) moveR = false; if (alien.getX() ==
+		 * ICRAFT_X - 1) moveR = true; if (moveR) alien.moveRight(); else
+		 * alien.moveLeft();
+		 */
 	}
 
 	private void updateAlien() {

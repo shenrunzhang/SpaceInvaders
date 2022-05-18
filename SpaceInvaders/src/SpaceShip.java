@@ -12,10 +12,12 @@ public class SpaceShip extends Sprite {
 		super(x, y);
 		missiles = new ArrayList<Missile>();
 		loadImage("src/resources/spaceship.png");
+		getImageDimensions();
 	}
 
 	public void shoot() {
-		Missile missile = new Missile(x + 25, y + height);
+		Missile missile = new Missile(x + 28, y - height * 1 / 5);
+		System.out.println(width + " " + height);
 		missiles.add(missile);
 	}
 
