@@ -11,6 +11,8 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 public class Board extends JPanel implements ActionListener {
 
