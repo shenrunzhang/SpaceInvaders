@@ -140,11 +140,16 @@ public class Board extends JPanel implements ActionListener {
 		if (rand < 1000)
 			alien.fire();
 
-		/*
-		 * if (alien.getX() == ICRAFT_X + 100) moveR = false; if (alien.getX() ==
-		 * ICRAFT_X - 1) moveR = true; if (moveR) alien.moveRight(); else
-		 * alien.moveLeft();
-		 */
+		if (alien.getX() == alien.getInitX() + 100)
+			moveR = false;
+		if (alien.getX() == alien.getInitX() - 1)
+			moveR = true;
+		
+		if (moveR)
+			alien.moveRight();
+		else
+			alien.moveLeft();
+
 	}
 
 	private void updateAlien() {
@@ -157,6 +162,8 @@ public class Board extends JPanel implements ActionListener {
 
 	private void updateSpaceship() {
 		ship.move();
+		System.out.println("X: " + ship.getX() + " " + "Y: " + ship.getY());
+		
 	}
 
 	private class TAdapter extends KeyAdapter {

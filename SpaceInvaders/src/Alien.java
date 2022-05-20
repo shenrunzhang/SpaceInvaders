@@ -6,10 +6,11 @@ public class Alien extends Sprite {
 	private int dx;
 	private int dy = 0;
 	private ArrayList<Alien_Missile> missiles;
+	private int init_x;
 
 	public Alien(int x, int y) {
 		super(x, y);
-
+		init_x = x;
 		missiles = new ArrayList<>();
 
 		loadImage("src/resources/alien1.png");
@@ -27,6 +28,9 @@ public class Alien extends Sprite {
 
 	public void moveRight() {
 		dx = 1;
+	}
+	public int getInitX() {
+		return init_x;
 	}
 
 	public ArrayList<Alien_Missile> getMissiles() {

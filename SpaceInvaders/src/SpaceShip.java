@@ -28,6 +28,15 @@ public class SpaceShip extends Sprite {
 	public void move() {
 		x += dx;
 		y += dy;
+		
+		if (x < 0)
+			x = 0;
+		if (x > 1000 - width -20)
+			x = 1000 - width -20;
+		if (y < 0)
+			y = 0;
+		if (y > 650 - height -30)
+			y = 650 - height -30;
 		// System.out.println(getX() + " " + getY());
 	}
 
@@ -51,7 +60,7 @@ public class SpaceShip extends Sprite {
 			dy = -2;
 		}
 
-		if (key == KeyEvent.VK_DOWN) {
+		if (super.getY() < 650 && key == KeyEvent.VK_DOWN) {
 			dy = 2;
 		}
 	}
