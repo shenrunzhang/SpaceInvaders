@@ -29,6 +29,13 @@ public class Alien extends Sprite {
 	public void moveRight() {
 		dx = 1;
 	}
+	public void moveDown() {
+		dy = 1;
+	}
+	public void stopMove() {
+		dy = 0;
+		dx = 0;
+	}
 	public int getInitX() {
 		return init_x;
 	}

@@ -7,6 +7,7 @@ public class SpaceShip extends Sprite {
 	private int dx;
 	private int dy;
 	private ArrayList<Missile> missiles;
+	private java.util.Timer timer1;
 
 	public SpaceShip(int x, int y) {
 		super(x, y);

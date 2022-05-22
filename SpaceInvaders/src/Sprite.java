@@ -47,6 +47,9 @@ public class Sprite{
     public boolean isVisible() {
         return visible;
     }
+    public int getWidth() {
+    	return width;
+    }
     public void setVisible(Boolean visible) {
         this.visible = visible;
     }
