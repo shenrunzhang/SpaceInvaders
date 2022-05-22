@@ -178,7 +178,7 @@ public class Board extends JPanel implements ActionListener {
 
 	private void updateSpaceship() {
 		ship.move();
-		System.out.println("X: " + ship.getX() + " " + "Y: " + ship.getY());
+		 System.out.println("X: " + ship.getX() + " " + "Y: " + ship.getY());
 
 	}
 
