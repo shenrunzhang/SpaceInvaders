@@ -121,24 +121,11 @@ public class Board extends JPanel implements ActionListener {
 		// System.out.println(missiles.size());
 
 		for (int i = 0; i < missiles.size(); i++) {
-
+			
 			Missile missile = missiles.get(i);
-
-			boolean hit = false;
-			int cordx = 0;
-			int cordy = 0;
-			for (int j = 0; j < aliens.length; j++) {
-				for (int k = 0; k < aliens[j].length; k++) {
-					if (missile.collide(aliens[j][k]) && aliens[j][k].isVisible()) {
-						hit = true;
-						cordx = j;
-						cordy = k;
-					}
-				}
-			}
-			if (hit) {
-				aliens[cordx][cordy].setVisible(false);
-			}
+			
+			alienMissileCollision(missiles, i);
+			
 			if (missile.isVisible()) {
 
 				missile.move();
@@ -178,8 +165,27 @@ public class Board extends JPanel implements ActionListener {
 
 	private void updateSpaceship() {
 		ship.move();
-		 System.out.println("X: " + ship.getX() + " " + "Y: " + ship.getY());
+		// System.out.println("X: " + ship.getX() + " " + "Y: " + ship.getY());
+	}
 
+	private void alienMissileCollision(ArrayList<Missile> missiles, int i) {
+		Missile missile = missiles.get(i);
+		boolean hit = false;
+		int cordx = 0;
+		int cordy = 0;
+		for (int j = 0; j < aliens.length; j++) {
+			for (int k = 0; k < aliens[j].length; k++) {
+				if (missile.collide(aliens[j][k]) && aliens[j][k].isVisible()) {
+					hit = true;
+					cordx = j;
+					cordy = k;
+					missiles.remove(i);
+				}
+			}
+		}
+		if (hit) {
+			aliens[cordx][cordy].setVisible(false);
+		}
 	}
 
 	private class TAdapter extends KeyAdapter {

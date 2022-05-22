@@ -28,7 +28,7 @@ public class Sprite {
 		width = image.getWidth(null);
 		height = image.getHeight(null);
 	}
-
+	// Use only for missile.collide(ship)
 	public boolean collide(Sprite s) {
 		// System.out.println("X: " + x + " Y: " + y);
 		// System.out.println("Width: " + width + " Height: " + height);
