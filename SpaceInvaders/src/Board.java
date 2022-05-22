@@ -65,7 +65,8 @@ public class Board extends JPanel implements ActionListener {
 		Graphics2D g2d = (Graphics2D) g;
 		for (int i = 0; i < aliens.length; i++) {
 			for (int j = 0; j < aliens[i].length; j++) {
-				g2d.drawImage(aliens[i][j].getImage(), aliens[i][j].getX(), aliens[i][j].getY(), this);
+				if (aliens[i][j].isVisible())
+					g2d.drawImage(aliens[i][j].getImage(), aliens[i][j].getX(), aliens[i][j].getY(), this);
 				ArrayList<Alien_Missile> a_missiles = aliens[i][j].getMissiles();
 				for (Alien_Missile missile : a_missiles) {
 					g2d.drawImage(missile.getImage(), missile.getX(), missile.getY(), this);
@@ -123,6 +124,21 @@ public class Board extends JPanel implements ActionListener {
 
 			Missile missile = missiles.get(i);
 
+			boolean hit = false;
+			int cordx = 0;
+			int cordy = 0;
+			for (int j = 0; j < aliens.length; j++) {
+				for (int k = 0; k < aliens[j].length; k++) {
+					if (missile.collide(aliens[j][k]) && aliens[j][k].isVisible()) {
+						hit = true;
+						cordx = j;
+						cordy = k;
+					}
+				}
+			}
+			if (hit) {
+				aliens[cordx][cordy].setVisible(false);
+			}
 			if (missile.isVisible()) {
 
 				missile.move();
@@ -144,7 +160,7 @@ public class Board extends JPanel implements ActionListener {
 			moveR = false;
 		if (alien.getX() == alien.getInitX() - 1)
 			moveR = true;
-		
+
 		if (moveR)
 			alien.moveRight();
 		else
@@ -163,7 +179,7 @@ public class Board extends JPanel implements ActionListener {
 	private void updateSpaceship() {
 		ship.move();
 		System.out.println("X: " + ship.getX() + " " + "Y: " + ship.getY());
-		
+
 	}
 
 	private class TAdapter extends KeyAdapter {

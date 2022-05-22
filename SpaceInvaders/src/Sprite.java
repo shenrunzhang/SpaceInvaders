@@ -18,7 +18,7 @@ public class Sprite{
     }
     
     protected void loadImage(String imageName) {
-
+    	
         ImageIcon ii = new ImageIcon(imageName);
         image = ii.getImage();
     }
@@ -32,8 +32,9 @@ public class Sprite{
     		if(y >= s.getY() && y + height <= s.getY()) {
     			return true;
     		}
+    		return true;
     	}
-    	return false;
+    	return true;
     }
     public Image getImage() {
         return image;
@@ -47,8 +48,8 @@ public class Sprite{
     public boolean isVisible() {
         return visible;
     }
-    public void setVisible(Boolean visible) {
-        this.visible = visible;
+    public void setVisible(Boolean visible1) {
+        visible = visible1;
     }
     public Rectangle getBounds() {
         return new Rectangle(x, y, width, height);
