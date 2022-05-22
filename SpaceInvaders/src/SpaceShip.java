@@ -18,7 +18,7 @@ public class SpaceShip extends Sprite {
 
 	public void shoot() {
 		Missile missile = new Missile(x + 28, y - height * 1 / 5);
-		System.out.println(width + " " + height);
+		// System.out.println(width + " " + height);
 		missiles.add(missile);
 	}
 
@@ -29,15 +29,15 @@ public class SpaceShip extends Sprite {
 	public void move() {
 		x += dx;
 		y += dy;
-		
+
 		if (x < 0)
 			x = 0;
-		if (x > 1000 - width -20)
-			x = 1000 - width -20;
+		if (x > 1000 - width - 20)
+			x = 1000 - width - 20;
 		if (y < 0)
 			y = 0;
-		if (y > 650 - height -30)
-			y = 650 - height -30;
+		if (y > 650 - height - 30)
+			y = 650 - height - 30;
 		// System.out.println(getX() + " " + getY());
 	}
 

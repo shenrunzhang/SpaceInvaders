@@ -142,16 +142,28 @@ public class Board extends JPanel implements ActionListener {
 	private void doDrawing(Graphics g) {
 
 		Graphics2D g2d = (Graphics2D) g;
+<<<<<<< HEAD
 		for (int i = 0; i < aliens.size(); i++) {
 			g2d.drawImage(aliens.get(i).getImage(), aliens.get(i).getX(), aliens.get(i).getY(), this);
 			ArrayList<Alien_Missile> a_missiles = aliens.get(i).getMissiles();
 			for(Alien_Missile missile: a_missiles) {
 				g2d.drawImage(missile.getImage(), missile.getX(), missile.getY(), this);
+=======
+		for (int i = 0; i < aliens.length; i++) {
+			for (int j = 0; j < aliens[i].length; j++) {
+				if (aliens[i][j].isVisible())
+					g2d.drawImage(aliens[i][j].getImage(), aliens[i][j].getX(), aliens[i][j].getY(), this);
+				ArrayList<Alien_Missile> a_missiles = aliens[i][j].getMissiles();
+				for (Alien_Missile missile : a_missiles) {
+					g2d.drawImage(missile.getImage(), missile.getX(), missile.getY(), this);
+				}
+>>>>>>> a4b742f4e75aec8f4d5744413abf4a0392a8d779
 			}
 		}
 
 		ArrayList<Missile> missiles = ship.getMissiles();
-		g2d.drawImage(ship.getImage(), ship.getX(), ship.getY(), this);
+		if (ship.isVisible())
+			g2d.drawImage(ship.getImage(), ship.getX(), ship.getY(), this);
 		for (Missile missile : missiles) {
 			g2d.drawImage(missile.getImage(), missile.getX(), missile.getY(), this);
 		}
@@ -180,6 +192,7 @@ public class Board extends JPanel implements ActionListener {
 		repaint();
 
 	}
+<<<<<<< HEAD
 	
 	private void checkCollisions() {
 		Rectangle r3 = ship.getBounds();
@@ -221,6 +234,29 @@ public class Board extends JPanel implements ActionListener {
 				if (r1.intersects(r2)) {
 					m.setVisible(false);
 					alien.setVisible(false);
+=======
+
+	private void updateMissiles() {
+
+		for (int i = 0; i < aliens.length; i++) {
+			for (int j = 0; j < aliens[i].length; j++) {
+				ArrayList<Alien_Missile> a_missiles = aliens[i][j].getMissiles();
+
+				for (int k = 0; k < a_missiles.size(); k++) {
+
+					Alien_Missile missile = a_missiles.get(k);
+
+					if (missile.collide(ship)) {
+						ship.setVisible(false);
+					}
+					if (missile.isVisible()) {
+
+						missile.move();
+					} else {
+
+						a_missiles.remove(k);
+					}
+>>>>>>> a4b742f4e75aec8f4d5744413abf4a0392a8d779
 				}
 			}
 		}
@@ -256,6 +292,8 @@ public class Board extends JPanel implements ActionListener {
 
 			Missile missile = missiles.get(i);
 
+			alienMissileCollision(missiles, i);
+
 			if (missile.isVisible()) {
 
 				missile.move();
@@ -280,8 +318,18 @@ public class Board extends JPanel implements ActionListener {
 
 		if (rand < 500)
 			alien.fire();
+<<<<<<< HEAD
 		if (movement == 0) {
 			alien.stopMove();
+=======
+
+		if (alien.getX() == alien.getInitX() + 100)
+			moveR = false;
+		if (alien.getX() == alien.getInitX() - 1)
+			moveR = true;
+
+		if (moveR)
+>>>>>>> a4b742f4e75aec8f4d5744413abf4a0392a8d779
 			alien.moveRight();
 		}	
 		if (movement == 1) {
@@ -312,8 +360,31 @@ public class Board extends JPanel implements ActionListener {
 
 	private void updateSpaceship() {
 		ship.move();
-		System.out.println("X: " + ship.getX() + " " + "Y: " + ship.getY());
-		
+		// System.out.println("X: " + ship.getX() + " " + "Y: " + ship.getY());
+	}
+
+	private void alienMissileCollision(ArrayList<Missile> missiles, int i) {
+		Missile missile = missiles.get(i);
+		boolean hit = false;
+		int cordx = 0;
+		int cordy = 0;
+		for (int j = 0; j < aliens.length; j++) {
+			for (int k = 0; k < aliens[j].length; k++) {
+				if (missile.collide(aliens[j][k]) && aliens[j][k].isVisible()) {
+					hit = true;
+					cordx = j;
+					cordy = k;
+					try {
+						missiles.remove(i);
+					} finally {
+
+					}
+				}
+			}
+		}
+		if (hit) {
+			aliens[cordx][cordy].setVisible(false);
+		}
 	}
 
 	private class TAdapter extends KeyAdapter {

@@ -29,6 +29,7 @@ public class Alien extends Sprite {
 	public void moveRight() {
 		dx = 1;
 	}
+<<<<<<< HEAD
 	public void moveDown() {
 		dy = 1;
 	}
@@ -36,6 +37,9 @@ public class Alien extends Sprite {
 		dy = 0;
 		dx = 0;
 	}
+=======
+
+>>>>>>> a4b742f4e75aec8f4d5744413abf4a0392a8d779
 	public int getInitX() {
 		return init_x;
 	}
@@ -45,7 +49,9 @@ public class Alien extends Sprite {
 	}
 
 	public void fire() {
-		missiles.add(new Alien_Missile(x + width / 5, y + height * 3 / 5));
+		if (super.isVisible()) {
+			missiles.add(new Alien_Missile(x + width / 5, y + height * 3 / 5));
+		}
 	}
 
 }
