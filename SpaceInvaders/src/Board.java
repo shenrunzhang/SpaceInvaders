@@ -75,7 +75,8 @@ public class Board extends JPanel implements ActionListener {
 		}
 
 		ArrayList<Missile> missiles = ship.getMissiles();
-		g2d.drawImage(ship.getImage(), ship.getX(), ship.getY(), this);
+		if (ship.isVisible())
+			g2d.drawImage(ship.getImage(), ship.getX(), ship.getY(), this);
 		for (Missile missile : missiles) {
 			g2d.drawImage(missile.getImage(), missile.getX(), missile.getY(), this);
 		}
@@ -106,6 +107,9 @@ public class Board extends JPanel implements ActionListener {
 
 					Alien_Missile missile = a_missiles.get(k);
 
+					if (missile.collide(ship)) {
+						ship.setVisible(false);
+					}
 					if (missile.isVisible()) {
 
 						missile.move();
@@ -121,11 +125,11 @@ public class Board extends JPanel implements ActionListener {
 		// System.out.println(missiles.size());
 
 		for (int i = 0; i < missiles.size(); i++) {
-			
+
 			Missile missile = missiles.get(i);
-			
+
 			alienMissileCollision(missiles, i);
-			
+
 			if (missile.isVisible()) {
 
 				missile.move();
@@ -179,7 +183,11 @@ public class Board extends JPanel implements ActionListener {
 					hit = true;
 					cordx = j;
 					cordy = k;
-					missiles.remove(i);
+					try {
+						missiles.remove(i);
+					} finally {
+
+					}
 				}
 			}
 		}
