@@ -17,14 +17,14 @@ import javax.imageio.stream.ImageInputStream;
 public class Board extends JPanel implements ActionListener {
 	private int health = 100;
 	
-	
 	private final int ICRAFT_X = 40;
 	private final int ICRAFT_Y = 60;
-	private final int DELAY = 20;
+	private final int DELAY = 60;
 	private Timer timer;
 	private ArrayList<Alien> aliens;
 	private SpaceShip ship;
 	private boolean ingame;
+	private boolean win;
 	private Image background;
 	private java.util.Timer timer1;
 	private java.util.Timer timer2;
@@ -76,13 +76,13 @@ public class Board extends JPanel implements ActionListener {
 		
 		timer1 = new java.util.Timer();
         timer1.scheduleAtFixedRate(new MoveRight(), 
-                0, 3000);
+                0, 9000 * (DELAY/60));
         timer2 = new java.util.Timer();
         timer2.scheduleAtFixedRate(new MoveLeft(), 
-                1000, 3000);
+                3000 * (DELAY/60), 9000 * (DELAY/60));
         timer3 = new java.util.Timer();
         timer3.scheduleAtFixedRate(new MoveDown(), 
-                2000, 3000);  
+                6000 * (DELAY/60), 9000 * (DELAY/60));  
 	}
 	
 	private class MoveRight extends TimerTask {
@@ -121,8 +121,12 @@ public class Board extends JPanel implements ActionListener {
 		g.drawImage(background, 0, 0, null);
 		
 		
-		if(ingame)
+		if(ingame) {
 			doDrawing(g);
+			drawHealth(g);
+		}
+		else if (win)
+			drawWon(g);
 		else
 			drawGameOver(g);
 
@@ -130,6 +134,16 @@ public class Board extends JPanel implements ActionListener {
 	}
 	private void drawGameOver(Graphics g) {
 		String msg = "Game Over";
+		Font small = new Font("Helvetica", Font.BOLD, 14);
+		FontMetrics fm = getFontMetrics(small);
+
+        g.setColor(Color.white);
+        g.setFont(small);
+        g.drawString(msg, (1000 - fm.stringWidth(msg)) / 2,
+                650 / 2);
+	}
+	private void drawWon(Graphics g) {
+		String msg = "You Won";
 		Font small = new Font("Helvetica", Font.BOLD, 14);
 		FontMetrics fm = getFontMetrics(small);
 
@@ -161,6 +175,13 @@ public class Board extends JPanel implements ActionListener {
 			g2d.drawImage(s.getImage(), s.getX(), s.getY(), this);
 		}
 
+	}
+	private void drawHealth(Graphics g) {
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.setColor(Color.RED);
+        g2d.fillRect(50,50,health, 15);
+        g2d.setColor(Color.WHITE);
+        g2d.drawRect(48, 48, 104, 19);
 	}
 
 	@Override
@@ -198,7 +219,8 @@ public class Board extends JPanel implements ActionListener {
             for(int j = 0; j < a_missiles.size(); j ++) {
             	Rectangle r4 = a_missiles.get(j).getBounds();
             	if(r3.intersects(r4)) {
-            		health -= 10;
+            		a_missiles.remove(j);
+            		health -= 20;
             	}
             	
             	for(int k = 0; k < shields.size(); k++) {
@@ -281,7 +303,7 @@ public class Board extends JPanel implements ActionListener {
 	private void randomAlienFire(Alien alien) {
 		int rand = (int) (Math.random() * 300000);
 
-		if (rand < 500)
+		if (rand < 1500)
 			alien.fire();
 		if (movement == 0) {
 			alien.stopMove();
@@ -302,6 +324,7 @@ public class Board extends JPanel implements ActionListener {
 	private void updateAlien() {
 		if (aliens.isEmpty()) {
 			ingame = false;
+			win = true;
 			return;
 		}
 		for (int i = 0; i < aliens.size(); i++) {
@@ -315,32 +338,9 @@ public class Board extends JPanel implements ActionListener {
 
 	private void updateSpaceship() {
 		ship.move();
-		// System.out.println("X: " + ship.getX() + " " + "Y: " + ship.getY());
 	}
 
-	// private void alienMissileCollision(ArrayList<Missile> missiles, int i) {
-	// 	Missile missile = missiles.get(i);
-	// 	boolean hit = false;
-	// 	int cordx = 0;
-	// 	int cordy = 0;
-	// 	for (int j = 0; j < aliens.length; j++) {
-	// 		for (int k = 0; k < aliens[j].length; k++) {
-	// 			if (missile.collide(aliens[j][k]) && aliens[j][k].isVisible()) {
-	// 				hit = true;
-	// 				cordx = j;
-	// 				cordy = k;
-	// 				try {
-	// 					missiles.remove(i);
-	// 				} finally {
 
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// 	if (hit) {
-	// 		aliens[cordx][cordy].setVisible(false);
-	// 	}
-	// }
 
 	private class TAdapter extends KeyAdapter {
 

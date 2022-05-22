@@ -1,7 +1,4 @@
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.List;
-
 public class Alien extends Sprite {
 	private int dx;
 	private int dy = 0;
@@ -30,7 +27,7 @@ public class Alien extends Sprite {
 		dx = 1;
 	}
 	public void moveDown() {
-		dy = 1;
+		dy = 2;
 	}
 	public void stopMove() {
 		dy = 0;

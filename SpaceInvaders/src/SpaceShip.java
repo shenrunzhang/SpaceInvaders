@@ -5,9 +5,8 @@ import javax.swing.ImageIcon;
 
 public class SpaceShip extends Sprite {
 	private int dx;
-	private int dy;
+//	private int dy;
 	private ArrayList<Missile> missiles;
-	private java.util.Timer timer1;
 
 	public SpaceShip(int x, int y) {
 		super(x, y);
@@ -18,7 +17,6 @@ public class SpaceShip extends Sprite {
 
 	public void shoot() {
 		Missile missile = new Missile(x + 28, y - height * 1 / 5);
-		// System.out.println(width + " " + height);
 		missiles.add(missile);
 	}
 
@@ -28,7 +26,7 @@ public class SpaceShip extends Sprite {
 
 	public void move() {
 		x += dx;
-		y += dy;
+//		y += dy;
 
 		if (x < 0)
 			x = 0;
@@ -38,7 +36,6 @@ public class SpaceShip extends Sprite {
 			y = 0;
 		if (y > 650 - height - 30)
 			y = 650 - height - 30;
-		// System.out.println(getX() + " " + getY());
 	}
 
 	public void keyPressed(KeyEvent e) {
@@ -50,20 +47,20 @@ public class SpaceShip extends Sprite {
 		}
 
 		if (key == KeyEvent.VK_LEFT) {
-			dx = -2;
+			dx = -4;
 		}
 
 		if (key == KeyEvent.VK_RIGHT) {
-			dx = 2;
+			dx = 4;
 		}
 
-		if (key == KeyEvent.VK_UP) {
-			dy = -2;
-		}
-
-		if (super.getY() < 650 && key == KeyEvent.VK_DOWN) {
-			dy = 2;
-		}
+//		if (key == KeyEvent.VK_UP) {
+//			dy = -2;
+//		}
+//
+//		if (super.getY() < 650 && key == KeyEvent.VK_DOWN) {
+//			dy = 2;
+//		}
 	}
 
 	public void keyReleased(KeyEvent e) {
@@ -78,13 +75,13 @@ public class SpaceShip extends Sprite {
 			dx = 0;
 		}
 
-		if (key == KeyEvent.VK_UP) {
-			dy = 0;
-		}
-
-		if (key == KeyEvent.VK_DOWN) {
-			dy = 0;
-		}
+//		if (key == KeyEvent.VK_UP) {
+//			dy = 0;
+//		}
+//
+//		if (key == KeyEvent.VK_DOWN) {
+//			dy = 0;
+//		}
 	}
 
 }

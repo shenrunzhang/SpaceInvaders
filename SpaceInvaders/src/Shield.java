@@ -14,6 +14,8 @@ public class Shield extends Sprite{
 	public void resize() {
 		
 		image = image.getScaledInstance((int)(width - damage), (int)(height - height * damage / width), Image.SCALE_DEFAULT);
+		x += damage/2;
+		y += damage/2;
 		damage += 15;
 	}
 	public int getHealth(){
