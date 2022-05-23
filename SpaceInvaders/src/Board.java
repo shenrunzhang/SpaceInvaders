@@ -5,21 +5,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import java.util.TimerTask;
-import java.time.LocalDateTime;
 import java.awt.Font;
 import java.awt.FontMetrics;
-import java.util.Date;
-
-import java.awt.Image;
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.ImageInputStream;
 
 public class Board extends JPanel implements ActionListener {
 	private int health = 100;
-	
-	private final int ICRAFT_X = 40;
-	private final int ICRAFT_Y = 60;
 	private final int DELAY = 60;
 	private Timer timer;
 	private ArrayList<Alien> aliens;
@@ -31,7 +21,6 @@ public class Board extends JPanel implements ActionListener {
 	private java.util.Timer timer2;
 	private java.util.Timer timer3;
 	private int movement;
-	//private Shield[] shields;
 	private ArrayList<Shield> shields = new ArrayList<>();
 	public double lastClickTime = 0;
 	static final double minClickDelay = 1000;
@@ -350,6 +339,8 @@ public class Board extends JPanel implements ActionListener {
 
 	private void updateSpaceship() {
 		ship.move();
+		if(health<0)
+			ingame = false;
 	}
 
 
