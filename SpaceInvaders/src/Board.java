@@ -5,9 +5,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import java.util.TimerTask;
-
+import java.time.LocalDateTime;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.util.Date;
 
 import java.awt.Image;
 import javax.imageio.ImageIO;
@@ -32,6 +33,8 @@ public class Board extends JPanel implements ActionListener {
 	private int movement;
 	//private Shield[] shields;
 	private ArrayList<Shield> shields = new ArrayList<>();
+	public double lastClickTime = 0;
+	static final double minClickDelay = 1000;
 	
 	private int[][] pos = {
 			{230, 0} , {402, 0}, {575, 0}, {747, 0},
@@ -45,10 +48,6 @@ public class Board extends JPanel implements ActionListener {
 
 		initBoard();
 		ship = new SpaceShip(450, 500);
-//		shields = new Shield[4];
-//		for (int i = 0; i < shields.length; i++ ) {
-//			shields[i] = new Shield(200 + i * 200,400);
-//		}
 		for (int i = 0; i < 4; i++) {
 			shields.add(new Shield(200 + i * 200,400));
 		}
@@ -182,6 +181,15 @@ public class Board extends JPanel implements ActionListener {
         g2d.fillRect(50,50,health, 15);
         g2d.setColor(Color.WHITE);
         g2d.drawRect(48, 48, 104, 19);
+        
+        
+        String msg = "HEALTH";
+		Font small = new Font("Helvetica", Font.BOLD, 14);
+		FontMetrics fm = getFontMetrics(small);
+
+        g.setColor(Color.white);
+        g.setFont(small);
+        g.drawString(msg, 50, 40);
 	}
 
 	@Override
@@ -328,11 +336,15 @@ public class Board extends JPanel implements ActionListener {
 			return;
 		}
 		for (int i = 0; i < aliens.size(); i++) {
+			if(aliens.get(i).getY() + aliens.get(i).height > 650)
+				ingame = false;
 			
 			if (aliens.get(i).isVisible())
 				aliens.get(i).move();
 			else
 				aliens.remove(i);
+			
+			
 		}
 	}
 
@@ -351,9 +363,19 @@ public class Board extends JPanel implements ActionListener {
 
 		@Override
 		public void keyPressed(KeyEvent e) {
-			ship.keyPressed(e);
+			int key = e.getKeyCode();
+			double now = System.currentTimeMillis();
+			
+			if(key != KeyEvent.VK_SPACE)	
+				ship.keyPressed(e);
+			
+			if(key == KeyEvent.VK_SPACE && (now - lastClickTime) > minClickDelay) {
+				ship.keyPressed(e);
+				lastClickTime = now;
+			}
+			
 		}
-
+		
 	}
 
 }
