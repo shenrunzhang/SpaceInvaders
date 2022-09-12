@@ -11,9 +11,9 @@ Project is created with:
 	JavaSE-15
   
 ## Controls
-Left Arrow - Fly left
-Right Arrow - Fly right
-Space - Shoot missile
+* Left Arrow - Fly left
+* Right Arrow - Fly right
+* Space - Shoot missile
 
 ## Gameplay
 The game starts with 16 enemy space ships arranged in a grid.
